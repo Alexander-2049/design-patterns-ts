@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coffee Machine</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #log {
+        border: 1px solid #ccc;
+        height: 200px;
+        overflow-y: auto;
+        padding: 5px;
+      }
+      #inventory {
+        font-weight: bold;
+        margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Coffee Machine UI</h1>
+
+    <div>
+      <h2>Inventory Status</h2>
+      <div id="inventory"></div>
+    </div>
+
+    <div>
+      <h2>Make a Drink</h2>
+      <select id="drink-select"></select>
+      <button id="make-btn">Make Drink</button>
+    </div>
+
+    <div>
+      <h2>Refill Ingredient</h2>
+      <input id="ingredient-name" type="text" placeholder="Ingredient name" />
+      <input id="ingredient-amount" type="number" placeholder="Amount" />
+      <button id="refill-btn">Refill</button>
+    </div>
+
+    <div>
+      <h2>Log</h2>
+      <ul id="log"></ul>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
