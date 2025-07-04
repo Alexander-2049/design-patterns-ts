@@ -7,21 +7,63 @@ import { Inventory } from './inventory/Inventory';
 import { LoggerObserver } from './observer/LoggerObserver';
 import { DrinkFactory } from './drinks/DrinkFactory';
 
+import { loadDefaultIngredients, registerDefaults } from './inventory/defaultIngredients';
+
+class DOMLogger implements LoggerObserver {
+  private logEl = document.getElementById('log')!;
+
+  update(message: string): void {
+    const li = document.createElement('li');
+    li.textContent = message;
+    this.logEl.appendChild(li);
+  }
+}
+
+registerDefaults();
+
 const inventory = new Inventory();
+loadDefaultIngredients().forEach(ing => inventory.add(ing));
+
 const coffeeMachine = new CoffeeMachine(inventory);
+coffeeMachine.addObserver(new DOMLogger());
 
-coffeeMachine.addObserver(new LoggerObserver());
+function updateInventoryUI() {
+  const el = document.getElementById('inventory')!;
+  el.textContent = inventory.getStatus();
+}
 
-coffeeMachine.refillIngredient('coffee', 100);
-coffeeMachine.refillIngredient('milk', 500);
-coffeeMachine.refillIngredient('water', 1000);
+function initDrinkSelect() {
+  const select = document.getElementById('drink-select') as HTMLSelectElement;
+  select.innerHTML = '';
+  DrinkFactory.getAvailableDrinks().forEach(name => {
+    const option = document.createElement('option');
+    option.value = name;
+    option.textContent = name;
+    select.appendChild(option);
+  });
+}
 
-coffeeMachine.showInventory();
+document.getElementById('make-btn')?.addEventListener('click', () => {
+  const drinkName = (document.getElementById('drink-select') as HTMLSelectElement).value;
+  const drink = DrinkFactory.create(drinkName);
+  if (drink) {
+    coffeeMachine.makeDrink(drink);
+    updateInventoryUI();
+  }
+});
 
-const espresso = DrinkFactory.create('Espresso');
-if (espresso) coffeeMachine.makeDrink(espresso);
+document.getElementById('refill-btn')?.addEventListener('click', () => {
+  const name = (document.getElementById('ingredient-name') as HTMLInputElement).value
+    .trim()
+    .toLowerCase();
+  const amount = parseFloat(
+    (document.getElementById('ingredient-amount') as HTMLInputElement).value,
+  );
+  if (name && amount > 0) {
+    coffeeMachine.refillIngredient(name, amount);
+    updateInventoryUI();
+  }
+});
 
-const cappuccino = DrinkFactory.create('Cappuccino');
-if (cappuccino) coffeeMachine.makeDrink(cappuccino);
-
-coffeeMachine.showInventory();
+initDrinkSelect();
+updateInventoryUI();

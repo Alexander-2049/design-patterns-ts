@@ -1,4 +1,4 @@
 export enum IngredientUnit {
-  Gram = 'g',
-  Milliliter = 'ml',
+  GRAM = 'g',
+  MILLILITER = 'ml',
 }

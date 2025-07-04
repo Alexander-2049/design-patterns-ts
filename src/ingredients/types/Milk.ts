@@ -3,5 +3,5 @@ import { IngredientUnit } from '../IngredientUnit';
 
 IngredientRegistry.register({
   name: 'Milk',
-  unit: IngredientUnit.Milliliter,
+  unit: IngredientUnit.MILLILITER,
 });

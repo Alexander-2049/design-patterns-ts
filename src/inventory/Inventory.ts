@@ -1,6 +1,5 @@
-import { Ingredient } from '../ingredients/Ingredient';
+import { Ingredient } from '../ingredients/types/Ingredient';
 import { IngredientRegistry } from '../ingredients/IngredientRegistry';
-import { IObserver } from '../observer/IObserver';
 import { Observable } from '../observer/Observable';
 
 export class Inventory extends Observable {
@@ -11,6 +10,13 @@ export class Inventory extends Observable {
     IngredientRegistry.getAll().forEach(ingredient => {
       this.storage.set(ingredient.name.toLowerCase(), 0);
     });
+  }
+
+  public add(ingredient: Ingredient): void {
+    const name = ingredient.name.toLowerCase();
+    const current = this.storage.get(name) || 0;
+    this.storage.set(name, current + ingredient.amount);
+    this.notifyObservers(`+ Added ${ingredient.amount} of ${ingredient.name}`);
   }
 
   public refill(ingredientName: string, amount: number): void {

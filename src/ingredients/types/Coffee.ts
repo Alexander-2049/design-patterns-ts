@@ -3,5 +3,5 @@ import { IngredientUnit } from '../IngredientUnit';
 
 IngredientRegistry.register({
   name: 'Coffee',
-  unit: IngredientUnit.Gram,
+  unit: IngredientUnit.GRAM,
 });
