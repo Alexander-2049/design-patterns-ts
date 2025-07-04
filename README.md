@@ -1,16 +1,4 @@
-# TypeScript Projects Templates
-
-## Empty
-
-```bash
-git clone https://github.com/Alexander-2049/typescript-template.git
-```
-
-## ExpressJS
-
-```bash
-git clone --branch express https://github.com/Alexander-2049/typescript-template.git
-```
+# Coffie Machine Simulator
 
 ## Install packages
 
