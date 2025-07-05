@@ -23,7 +23,9 @@ export class Inventory extends Observable {
     const name = ingredientName.toLowerCase();
     const current = this.storage.get(name) || 0;
     this.storage.set(name, current + amount);
-    this.notifyObservers(`+ Refilled ${amount} of ${ingredientName}`);
+    this.notifyObservers(
+      `+ Refilled ${amount}${IngredientRegistry.get(ingredientName)?.unit}. of ${ingredientName}`,
+    );
   }
 
   public hasEnough(required: Record<string, number>): boolean {

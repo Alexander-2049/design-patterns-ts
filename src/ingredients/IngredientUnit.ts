@@ -1,4 +1,4 @@
-export enum IngredientUnit {
-  GRAM = 'g',
-  MILLILITER = 'ml',
-}
+export const IngredientUnit = {
+  GRAM: 'g',
+  MILLILITER: 'ml',
+};
