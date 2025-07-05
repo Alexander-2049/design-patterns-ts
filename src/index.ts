@@ -8,6 +8,7 @@ import { LoggerObserver } from './observer/LoggerObserver';
 import { DrinkFactory } from './drinks/DrinkFactory';
 
 import { loadDefaultIngredients, registerDefaults } from './inventory/defaultIngredients';
+import { IngredientRegistry } from './ingredients/IngredientRegistry';
 
 class DOMLogger implements LoggerObserver {
   private logEl = document.getElementById('log')!;
@@ -52,8 +53,23 @@ document.getElementById('make-btn')?.addEventListener('click', () => {
   }
 });
 
+function initIngredientSelect() {
+  const select = document.getElementById('ingredient-select') as HTMLSelectElement;
+  select.innerHTML = '';
+  function addOption(ingredient: { name: string }) {
+    const option = document.createElement('option');
+    option.value = ingredient.name;
+    option.textContent = ingredient.name;
+    select.appendChild(option);
+  }
+
+  IngredientRegistry.getAll().forEach(addOption);
+
+  IngredientRegistry.addIngredientListener(addOption);
+}
+
 document.getElementById('refill-btn')?.addEventListener('click', () => {
-  const name = (document.getElementById('ingredient-name') as HTMLInputElement).value
+  const name = (document.getElementById('ingredient-select') as HTMLInputElement).value
     .trim()
     .toLowerCase();
   const amount = parseFloat(
@@ -67,3 +83,4 @@ document.getElementById('refill-btn')?.addEventListener('click', () => {
 
 initDrinkSelect();
 updateInventoryUI();
+initIngredientSelect();
